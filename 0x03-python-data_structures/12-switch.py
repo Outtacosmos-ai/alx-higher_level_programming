@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-# Initialize variables
 a = 89
 b = 10
 
