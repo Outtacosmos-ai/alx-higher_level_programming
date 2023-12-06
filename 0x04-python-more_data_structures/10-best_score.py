@@ -8,6 +8,6 @@ def best_score(a_dictionary):
         a_dictionary (dict): The input dictionary.
 
     Returns:
-        str or None: The key with the highest value or None if the dictionary is empty.
+        str_or_none: Key with highest value or None if the dictionary is empty.
     """
     return max(a_dictionary, key=a_dictionary.get) if a_dictionary else None
