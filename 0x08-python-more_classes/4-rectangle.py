@@ -22,10 +22,8 @@ class Rectangle:
 
     @width.setter
     def width(self, value):
-        if not isinstance(value, int):
-            raise TypeError("width must be an integer")
-        if value < 0:
-            raise ValueError("width must be >= 0")
+        """Set the width of the Rectangle."""
+        self._validate_dimension(value, "width")
         self.__width = value
 
     @property
@@ -35,11 +33,16 @@ class Rectangle:
 
     @height.setter
     def height(self, value):
-        if not isinstance(value, int):
-            raise TypeError("height must be an integer")
-        if value < 0:
-            raise ValueError("height must be >= 0")
+        """Set the height of the Rectangle."""
+        self._validate_dimension(value, "height")
         self.__height = value
+
+    def _validate_dimension(self, value, dimension):
+        """Validate the width or height value."""
+        if not isinstance(value, int):
+            raise TypeError(f"{dimension} must be an integer")
+        if value < 0:
+            raise ValueError(f"{dimension} must be >= 0")
 
     def area(self):
         """Return the area of the Rectangle."""
@@ -47,19 +50,21 @@ class Rectangle:
 
     def perimeter(self):
         """Return the perimeter of the Rectangle."""
-        return 2 * (self.__width + self.__height) if self.__width and self.__height else 0
+        if self.__width and self.__height:
+            return 2 * (self.__width + self.__height)
+        return 0
 
     def __str__(self):
-    """Return the printable representation of the Rectangle.
+        """Return the printable representation of the Rectangle.
 
-    Represents the rectangle with the # character.
-    """
-    return (
-        "\n".join(["#" * self.__width for _ in range(self.__height)])
-        if self.__width and self.__height
-        else ""
-        )
-    
+        Represents the rectangle with the # character.
+        """
+        if not self.__width or not self.__height:
+            return ""
+
+        rect_rows = ["#" * self.__width for _ in range(self.__height)]
+        return "\n".join(rect_rows)
+
     def __repr__(self):
         """Return the string representation of the Rectangle."""
         return f"Rectangle({self.__width}, {self.__height})"
