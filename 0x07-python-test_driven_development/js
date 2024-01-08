@@ -1,0 +1,10 @@
+let firstName = "Mohamed";
+let lastName= "ESSRHIR";
+const PI = 3.14;
+let Number = 8;
+let favoriteSuperhero = "Batman";
+let favoriteQuote = "A legend Mr. Wane.";
+
+
+let fullNmae = firstName + " " + lastName;
+console.log("My full name is: " + fullNmae);
