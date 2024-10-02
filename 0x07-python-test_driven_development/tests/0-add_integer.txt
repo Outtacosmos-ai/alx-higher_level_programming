@@ -1,95 +1,99 @@
-The ``0-add_integer test`` module
-=================================
+==========================
+How to use 0-add_integer.py
+==========================
 
-Using ``add_integer``
----------------------
+Import function from module
+----------------------------
 
-This file is in restructured text format.
-First import ``add_integer`` from the ``0-add_integer`` module:
+>>> add_integer = __import__('0-add_integer').add_integer
 
-    >>> add_integer = __import__('0-add_integer').add_integer
 
-Checking for module docstring:
 
-    >>> m = __import__("0-add_integer").__doc__
-    >>> len(m) > 1 
-    True
-
-Checking for function docstring:
-
-    >>> f = __import__("0-add_integer").add_integer.__doc__
-    >>> len(f) > 1
-    True
-         
-Basic usage:
-
-    >>> add_integer(1, 2)
-    3
+Basic cases (intranet):
+-----------------------
     
-Test int argument:
+>>> add_integer(2)
+100
 
-    >>> add_integer(2)
-    100
+>>> add_integer(1, 2)
+3
 
-Test int argument and check default second:
+>>> add_integer(100, -2)
+98
 
-    >>> add_integer(0)
-    98
+>>> add_integer(100.3, -2)
+98
 
-Checking positive with negative:
+>>> add_integer(4, "School")
+Traceback (most recent call last):
+TypeError: b must be an integer
 
-    >>> add_integer(2, -4)
-    -2 
+>>> add_integer(None)
+Traceback (most recent call last):
+TypeError: a must be an integer
 
-Checking negative with positive:
+Edge cases:
+----------------
 
-    >>> add_integer(-6, 8)
-    2
+>>> add_integer()
+Traceback (most recent call last):
+TypeError: add_integer() missing 1 required positional argument: 'a'
 
-Checking addition over multiple values:
+>>> add_integer("unicorn")
+Traceback (most recent call last):
+TypeError: a must be an integer
 
-    >>> [add_integer(i, i ** 2) for i in range(6)]
-    [0, 2, 6, 12, 20, 30]
+>>> add_integer(5, None)
+Traceback (most recent call last):
+TypeError: b must be an integer
 
-Float and negative input:
+>>> add_integer(34, 54, 67)
+Traceback (most recent call last):
+TypeError: add_integer() takes from 1 to 2 positional arguments but 3 were given
 
-    >>> add_integer(100.3, -2)
-    98
+The result can't be a float
+>>> add_integer(2.5, 3.7)
+5
 
-Float overflow:
+The result can't be a float
+>>> add_integer(3.7)
+101
 
-    >>> add_integer(1500.5)
-    1598
+>>> add_integer([1, 2, 3])
+Traceback (most recent call last):
+TypeError: a must be an integer
 
-Float NaN:
+>>> add_integer((1, 2, 3))
+Traceback (most recent call last):
+TypeError: a must be an integer
 
-    >>> add_integer(float('NaN'))
-    Traceback (most recent call last):
-    ...
-    ValueError: cannot convert float NaN to integer
+>>> add_integer({"a": 1, "b": 2, "c": 3})
+Traceback (most recent call last):
+TypeError: a must be an integer
 
-String input:
+>>> add_integer(None)
+Traceback (most recent call last):
+TypeError: a must be an integer
 
-    >>> add_integer(4, "School")
-    Traceback (most recent call last):
-    ...
-    TypeError: b must be an integer
+exception OverflowError - Raised when the result of an arithmetic operation is too large to 
+be represented.
 
-None input:
+>>> add_integer(float('-inf'), float('inf'))
+Traceback (most recent call last):
+OverflowError: cannot convert float infinity to integer
 
-    >>> add_integer(None)
-    Traceback (most recent call last):
-    ...
-    TypeError: a must be an integer
+>>> add_integer(100e1000, 1)
+Traceback (most recent call last):
+OverflowError: cannot convert float infinity to integer
 
-Double negative float input:
+>>> add_integer(float('inf'))
+Traceback (most recent call last):
+OverflowError: cannot convert float infinity to integer
 
-    >>> add_integer(-100.5, -10.8)
-    -110
 
-Double string input:
+>>> add_integer(float('nan'), 0)
+Traceback (most recent call last):
+ValueError: cannot convert float NaN to integer
 
-    >>> add_integer("holberton", "school")
-    Traceback (most recent call last):
-    ...
-    TypeError: a must be an integer
+
+
