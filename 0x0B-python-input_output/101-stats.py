@@ -1,46 +1,41 @@
 #!/usr/bin/python3
-"""Script for parsing HTTP request logs."""
-
+"""Log parsing script."""
 import sys
 
-
-def print_stats(total_size, status_codes):
-    """Print accumulated statistics.
-
-    Args:
-        total_size (int): The accumulated file size.
-        status_codes (dict): The accumulated count of status codes.
-    """
-    print(f"File size: {total_size}")
-    for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
-            print(f"{code}: {status_codes[code]}")
+total_size = 0
+codes = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
+iteration = 0
 
 
-if __name__ == "__main__":
-    total_size = 0
-    status_codes = {
-        200: 0, 301: 0, 400: 0, 401: 0,
-        403: 0, 404: 0, 405: 0, 500: 0
-    }
-    line_count = 0
+def print_stats():
+    """Function that prints a resume of the stats."""
+    print("File size: {}".format(total_size))
+    for k, v in sorted(codes.items()):
+        if v is not 0:
+            print("{}: {}".format(k, v))
 
-    try:
-        for line in sys.stdin:
-            line_count += 1
-            parts = line.split()
 
-            if len(parts) > 2:
-                status_code = int(parts[-2])
-                file_size = int(parts[-1])
+try:
+    for line in sys.stdin:
+        line = line.split()
+        if len(line) >= 2:
+            tmp = iteration
+            if line[-2] in codes:
+                codes[line[-2]] += 1
+                iteration += 1
+            try:
+                total_size += int(line[-1])
+                if tmp == iteration:
+                    iteration += 1
+            except:
+                if tmp == iteration:
+                    continue
 
-                if status_code in status_codes:
-                    status_codes[status_code] += 1
-                total_size += file_size
+        if iteration % 10 == 0:
+            print_stats()
 
-            if line_count % 10 == 0:
-                print_stats(total_size, status_codes)
+    print_stats()
 
-    except KeyboardInterrupt:
-        print_stats(total_size, status_codes)
-        raise
+except KeyboardInterrupt:
+    print_stats()
