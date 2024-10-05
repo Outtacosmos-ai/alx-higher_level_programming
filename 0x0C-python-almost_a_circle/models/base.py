@@ -1,20 +1,17 @@
 #!/usr/bin/python3
-"""Defines a base model class."""
+"""Module for Base class"""
+
 
 class Base:
-    """Represent the base model.
-    
-    Attributes:
-        __nb_objects (int): The number of instantiated Bases.
-    """
+    """A base class"""
 
     __nb_objects = 0
 
     def __init__(self, id=None):
-        """Initialize a new Base.
+        """Initialize the base class
 
         Args:
-            id (int): The identity of the new Base.
+            id (int): The identifier of the instance
         """
         if id is not None:
             self.id = id
