@@ -7,15 +7,7 @@ class Rectangle(Base):
     """A Rectangle class"""
 
     def __init__(self, width, height, x=0, y=0, id=None):
-        """Initialize the Rectangle
-
-        Args:
-            width (int): The width of the rectangle
-            height (int): The height of the rectangle
-            x (int): The x-coordinate of the rectangle
-            y (int): The y-coordinate of the rectangle
-            id (int): The identifier of the rectangle
-        """
+        """Initialize the Rectangle"""
         super().__init__(id)
         self.width = width
         self.height = height
@@ -86,3 +78,7 @@ class Rectangle(Base):
         """Display the Rectangle instance with the character #"""
         for _ in range(self.height):
             print('#' * self.width)
+
+    def __str__(self):
+        """Return string representation of the Rectangle"""
+        return f"[Rectangle] ({self.id}) {self.x}/{self.y} - {self.width}/{self.height}"
